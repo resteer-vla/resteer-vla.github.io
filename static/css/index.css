@@ -51,6 +51,26 @@ body {
     font-family: 'Google Sans', sans-serif;
 }
 
+.title-with-logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+.resteer-logo {
+    height: 72px;
+    margin-bottom: 0;
+}
+
+.publication-subtitle {
+    font-family: 'Google Sans', sans-serif;
+    font-weight: 600;
+    margin-top: 0.25rem;
+    color: #363636;
+}
+
 .publication-authors {
     font-family: 'Google Sans', sans-serif;
 }

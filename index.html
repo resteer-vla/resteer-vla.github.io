@@ -15,7 +15,7 @@
   <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
   <link rel="stylesheet" href="./static/css/index.css">
-  <link rel="icon" href="./static/images/favicon.svg">
+  <link rel="icon" href="./static/images_resteer/resteer_logo.png">
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script defer src="./static/js/fontawesome.all.min.js"></script>
@@ -55,17 +55,24 @@
     <div class="container is-max-desktop">
       <div class="columns is-centered">
         <div class="column has-text-centered">
-          <h1 class="title is-1 publication-title">ReSteer: Quantifying and Refining the Steerability of Multitask Robot Policies</h1>
+          <div class="title-with-logo">
+            <img src="./static/images_resteer/resteer_logo.png" alt="ReSteer" class="resteer-logo">
+            <h1 class="title is-1 publication-title"><b>ReSteer</b></h1>
+          </div>
+          <p class="subtitle is-1 publication-subtitle">Quantifying and Refining the Steerability of Multitask Robot Policies</p>
 
           <div class="is-size-5 publication-authors">
             <span class="author-block"><a href="https://chenzheny.github.io" target="_blank" rel="noopener">Zhenyang Chen</a>,</span>
-            <span class="author-block"><a href="./" target="_blank" rel="noopener">Alan Tian</a>,</span>
-            <span class="author-block"><a href="https://lichothu.github.io" target="_blank" rel="noopener">Liquan Wang</a>,</span>
+            <span class="author-block"><a href="./" target="_blank" rel="noopener">Alan Tian</a><sup>†</sup>,</span>
+            <span class="author-block"><a href="https://lichothu.github.io" target="_blank" rel="noopener">Liquan Wang</a><sup>†</sup>,</span>
             <span class="author-block"><a href="https://sites.cc.gatech.edu/~bjoffe3" target="_blank" rel="noopener">Benjamin Joffe</a>,</span>
             <span class="author-block"><a href="https://eiclab.scs.gatech.edu" target="_blank" rel="noopener">Yingyan Celine Lin</a>,</span>
             <span class="author-block"><a href="./" target="_blank" rel="noopener">Yuxiao Chen</a>,</span>
-            <span class="author-block"><a href="https://www.siddkaramcheti.com" target="_blank" rel="noopener">Siddharth Karamcheti</a>,</span>
-            <span class="author-block"><a href="https://faculty.cc.gatech.edu/~danfei" target="_blank" rel="noopener">Danfei Xu</a></span>
+            <span class="author-block"><a href="https://www.siddkaramcheti.com" target="_blank" rel="noopener">Siddharth Karamcheti</a><sup>‡</sup>,</span>
+            <span class="author-block"><a href="https://faculty.cc.gatech.edu/~danfei" target="_blank" rel="noopener">Danfei Xu</a><sup>‡</sup></span>
+          </div>
+          <div class="is-size-6 publication-authors" style="margin-top: 0.25rem; color: #555;">
+            <sup>†</sup>Equal contribution &nbsp;&nbsp; <sup>‡</sup>Equal contribution
           </div>
 
           <div class="is-size-5 publication-authors">
@@ -104,10 +111,10 @@
   <div class="container is-max-desktop">
     <div class="hero-body">
       <video id="teaser" autoplay controls muted loop playsinline height="100%">
-        <source src="./static/videos/ReSteer_RSS_supplement%20(1).mp4" type="video/mp4">
+        <source src="./static/videos/ReSteer_web_video.mp4" type="video/mp4">
       </video>
-      <h2 class="subtitle has-text-centered">
-        ReSteer enables interruptible robot behavior: policies can switch tasks from intermediate states when users revise language instructions.
+      <h2 class="subtitle is-4 has-text-centered">
+        <b>TL;DR:</b> ReSteer enables interruptible robot behavior: policies can switch tasks from intermediate states when users revise language instructions.
       </h2>
     </div>
   </div>
