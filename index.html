@@ -2,35 +2,18 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <meta name="description"
-        content="Deformable Neural Radiance Fields creates free-viewpoint portraits (nerfies) from casually captured videos.">
-  <meta name="keywords" content="Nerfies, D-NeRF, NeRF">
+  <meta name="description" content="ReSteer: Quantifying and Refining the Steerability of Multitask Robot Policies.">
+  <meta name="keywords" content="ReSteer, Robotics, VLA, LIBERO, Steerability">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Nerfies: Deformable Neural Radiance Fields</title>
+  <title>ReSteer: Quantifying and Refining the Steerability of Multitask Robot Policies</title>
 
-  <!-- Global site tag (gtag.js) - Google Analytics -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-PYVRSFMDRL"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-
-    function gtag() {
-      dataLayer.push(arguments);
-    }
-
-    gtag('js', new Date());
-
-    gtag('config', 'G-PYVRSFMDRL');
-  </script>
-
-  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
-        rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
 
   <link rel="stylesheet" href="./static/css/bulma.min.css">
   <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
   <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
   <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
-  <link rel="stylesheet"
-        href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
   <link rel="stylesheet" href="./static/css/index.css">
   <link rel="icon" href="./static/images/favicon.svg">
 
@@ -52,122 +35,64 @@
   </div>
   <div class="navbar-menu">
     <div class="navbar-start" style="flex-grow: 1; justify-content: center;">
-      <a class="navbar-item" href="https://keunhong.com">
-      <span class="icon">
+      <a class="navbar-item" href="#">
+        <span class="icon">
           <i class="fas fa-home"></i>
-      </span>
+        </span>
       </a>
-
-      <div class="navbar-item has-dropdown is-hoverable">
-        <a class="navbar-link">
-          More Research
-        </a>
-        <div class="navbar-dropdown">
-          <a class="navbar-item" href="https://hypernerf.github.io">
-            HyperNeRF
-          </a>
-          <a class="navbar-item" href="https://nerfies.github.io">
-            Nerfies
-          </a>
-          <a class="navbar-item" href="https://latentfusion.github.io">
-            LatentFusion
-          </a>
-          <a class="navbar-item" href="https://photoshape.github.io">
-            PhotoShape
-          </a>
-        </div>
-      </div>
+      <a class="navbar-item" href="#video">Video</a>
+      <a class="navbar-item" href="#abstract">Abstract</a>
+      <a class="navbar-item" href="#results">Key Results</a>
+      <a class="navbar-item" href="#hypothesis">Hypothesis & Protocol</a>
+      <a class="navbar-item" href="#method">Method</a>
+      <a class="navbar-item" href="#BibTeX">BibTeX</a>
     </div>
-
   </div>
 </nav>
-
 
 <section class="hero">
   <div class="hero-body">
     <div class="container is-max-desktop">
       <div class="columns is-centered">
         <div class="column has-text-centered">
-          <h1 class="title is-1 publication-title">Nerfies: Deformable Neural Radiance Fields</h1>
+          <h1 class="title is-1 publication-title">ReSteer: Quantifying and Refining the Steerability of Multitask Robot Policies</h1>
+
           <div class="is-size-5 publication-authors">
-            <span class="author-block">
-              <a href="https://keunhong.com">Keunhong Park</a><sup>1</sup>,</span>
-            <span class="author-block">
-              <a href="https://utkarshsinha.com">Utkarsh Sinha</a><sup>2</sup>,</span>
-            <span class="author-block">
-              <a href="https://jonbarron.info">Jonathan T. Barron</a><sup>2</sup>,
-            </span>
-            <span class="author-block">
-              <a href="http://sofienbouaziz.com">Sofien Bouaziz</a><sup>2</sup>,
-            </span>
-            <span class="author-block">
-              <a href="https://www.danbgoldman.com">Dan B Goldman</a><sup>2</sup>,
-            </span>
-            <span class="author-block">
-              <a href="https://homes.cs.washington.edu/~seitz/">Steven M. Seitz</a><sup>1,2</sup>,
-            </span>
-            <span class="author-block">
-              <a href="http://www.ricardomartinbrualla.com">Ricardo Martin-Brualla</a><sup>2</sup>
-            </span>
+            <span class="author-block"><a href="https://chenzheny.github.io" target="_blank" rel="noopener">Zhenyang Chen</a>,</span>
+            <span class="author-block"><a href="./" target="_blank" rel="noopener">Alan Tian</a>,</span>
+            <span class="author-block"><a href="https://lichothu.github.io" target="_blank" rel="noopener">Liquan Wang</a>,</span>
+            <span class="author-block"><a href="https://sites.cc.gatech.edu/~bjoffe3" target="_blank" rel="noopener">Benjamin Joffe</a>,</span>
+            <span class="author-block"><a href="https://eiclab.scs.gatech.edu" target="_blank" rel="noopener">Yingyan Celine Lin</a>,</span>
+            <span class="author-block"><a href="./" target="_blank" rel="noopener">Yuxiao Chen</a>,</span>
+            <span class="author-block"><a href="https://www.siddkaramcheti.com" target="_blank" rel="noopener">Siddharth Karamcheti</a>,</span>
+            <span class="author-block"><a href="https://faculty.cc.gatech.edu/~danfei" target="_blank" rel="noopener">Danfei Xu</a></span>
           </div>
 
           <div class="is-size-5 publication-authors">
-            <span class="author-block"><sup>1</sup>University of Washington,</span>
-            <span class="author-block"><sup>2</sup>Google Research</span>
+            <span class="author-block">Georgia Institute of Technology</span>
           </div>
 
           <div class="column has-text-centered">
             <div class="publication-links">
-              <!-- PDF Link. -->
               <span class="link-block">
-                <a href="https://arxiv.org/pdf/2011.12948"
-                   class="external-link button is-normal is-rounded is-dark">
-                  <span class="icon">
-                      <i class="fas fa-file-pdf"></i>
-                  </span>
+                <a href="./static/papers/ReSteer_RSS2026.pdf" class="external-link button is-normal is-rounded is-dark" target="_blank" rel="noopener">
+                  <span class="icon"><i class="fas fa-file-pdf"></i></span>
                   <span>Paper</span>
                 </a>
               </span>
               <span class="link-block">
-                <a href="https://arxiv.org/abs/2011.12948"
-                   class="external-link button is-normal is-rounded is-dark">
-                  <span class="icon">
-                      <i class="ai ai-arxiv"></i>
-                  </span>
-                  <span>arXiv</span>
-                </a>
-              </span>
-              <!-- Video Link. -->
-              <span class="link-block">
-                <a href="https://www.youtube.com/watch?v=MrKrnHhk8IA"
-                   class="external-link button is-normal is-rounded is-dark">
-                  <span class="icon">
-                      <i class="fab fa-youtube"></i>
-                  </span>
+                <a href="#video" class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon"><i class="fas fa-video"></i></span>
                   <span>Video</span>
                 </a>
               </span>
-              <!-- Code Link. -->
               <span class="link-block">
-                <a href="https://github.com/google/nerfies"
-                   class="external-link button is-normal is-rounded is-dark">
-                  <span class="icon">
-                      <i class="fab fa-github"></i>
-                  </span>
-                  <span>Code</span>
-                  </a>
+                <a href="#BibTeX" class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon"><i class="ai ai-arxiv"></i></span>
+                  <span>Citation</span>
+                </a>
               </span>
-              <!-- Dataset Link. -->
-              <span class="link-block">
-                <a href="https://github.com/google/nerfies/releases/tag/0.1"
-                   class="external-link button is-normal is-rounded is-dark">
-                  <span class="icon">
-                      <i class="far fa-images"></i>
-                  </span>
-                  <span>Data</span>
-                  </a>
             </div>
-
           </div>
         </div>
       </div>
@@ -175,310 +100,170 @@
   </div>
 </section>
 
-<section class="hero teaser">
+<section class="hero teaser" id="video">
   <div class="container is-max-desktop">
     <div class="hero-body">
-      <video id="teaser" autoplay muted loop playsinline height="100%">
-        <source src="./static/videos/teaser.mp4"
-                type="video/mp4">
+      <video id="teaser" autoplay controls muted loop playsinline height="100%">
+        <source src="./static/videos/ReSteer_RSS_supplement%20(1).mp4" type="video/mp4">
       </video>
       <h2 class="subtitle has-text-centered">
-        <span class="dnerf">Nerfies</span> turns selfie videos from your phone into
-        free-viewpoint
-        portraits.
+        ReSteer enables interruptible robot behavior: policies can switch tasks from intermediate states when users revise language instructions.
       </h2>
     </div>
   </div>
 </section>
 
-
-<section class="hero is-light is-small">
-  <div class="hero-body">
-    <div class="container">
-      <div id="results-carousel" class="carousel results-carousel">
-        <div class="item item-steve">
-          <video poster="" id="steve" autoplay controls muted loop playsinline height="100%">
-            <source src="./static/videos/steve.mp4"
-                    type="video/mp4">
-          </video>
-        </div>
-        <div class="item item-chair-tp">
-          <video poster="" id="chair-tp" autoplay controls muted loop playsinline height="100%">
-            <source src="./static/videos/chair-tp.mp4"
-                    type="video/mp4">
-          </video>
-        </div>
-        <div class="item item-shiba">
-          <video poster="" id="shiba" autoplay controls muted loop playsinline height="100%">
-            <source src="./static/videos/shiba.mp4"
-                    type="video/mp4">
-          </video>
-        </div>
-        <div class="item item-fullbody">
-          <video poster="" id="fullbody" autoplay controls muted loop playsinline height="100%">
-            <source src="./static/videos/fullbody.mp4"
-                    type="video/mp4">
-          </video>
-        </div>
-        <div class="item item-blueshirt">
-          <video poster="" id="blueshirt" autoplay controls muted loop playsinline height="100%">
-            <source src="./static/videos/blueshirt.mp4"
-                    type="video/mp4">
-          </video>
-        </div>
-        <div class="item item-mask">
-          <video poster="" id="mask" autoplay controls muted loop playsinline height="100%">
-            <source src="./static/videos/mask.mp4"
-                    type="video/mp4">
-          </video>
-        </div>
-        <div class="item item-coffee">
-          <video poster="" id="coffee" autoplay controls muted loop playsinline height="100%">
-            <source src="./static/videos/coffee.mp4"
-                    type="video/mp4">
-          </video>
-        </div>
-        <div class="item item-toby">
-          <video poster="" id="toby" autoplay controls muted loop playsinline height="100%">
-            <source src="./static/videos/toby2.mp4"
-                    type="video/mp4">
-          </video>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-
-<section class="section">
+<section class="section" id="abstract">
   <div class="container is-max-desktop">
-    <!-- Abstract. -->
     <div class="columns is-centered has-text-centered">
       <div class="column is-four-fifths">
         <h2 class="title is-3">Abstract</h2>
         <div class="content has-text-justified">
           <p>
-            We present the first method capable of photorealistically reconstructing a non-rigidly
-            deforming scene using photos/videos captured casually from mobile phones.
-          </p>
-          <p>
-            Our approach augments neural radiance fields
-            (NeRF) by optimizing an
-            additional continuous volumetric deformation field that warps each observed point into a
-            canonical 5D NeRF.
-            We observe that these NeRF-like deformation fields are prone to local minima, and
-            propose a coarse-to-fine optimization method for coordinate-based models that allows for
-            more robust optimization.
-            By adapting principles from geometry processing and physical simulation to NeRF-like
-            models, we propose an elastic regularization of the deformation field that further
-            improves robustness.
-          </p>
-          <p>
-            We show that <span class="dnerf">Nerfies</span> can turn casually captured selfie
-            photos/videos into deformable NeRF
-            models that allow for photorealistic renderings of the subject from arbitrary
-            viewpoints, which we dub <i>"nerfies"</i>. We evaluate our method by collecting data
-            using a
-            rig with two mobile phones that take time-synchronized photos, yielding train/validation
-            images of the same pose at different viewpoints. We show that our method faithfully
-            reconstructs non-rigidly deforming scenes and reproduces unseen views with high
-            fidelity.
+            Despite strong multi-task pretraining, existing policies often exhibit poor task steerability. For example, a robot may fail to respond to a new instruction "put the bowl in the sink" when moving towards the oven, executing "close the oven", even though it can complete both tasks when executed separately. We propose ReSteer, a framework to quantify and improve task steerability in multitask robot policies. We conduct an exhaustive evaluation of state-of-the-art policies, revealing a common lack of steerability. We find that steerability is associated with limited overlap among training task trajectory distributions, and introduce a proxy metric to measure this overlap from policy behavior. Building on this insight, ReSteer improves steerability via three components: (i) a steerability estimator that identifies low-steerability states without full-rollout evaluation, (ii) a steerable data generator that synthesizes motion segments from these states, and (iii) a self-refinement pipeline that improves policy steerability using the generated data. In simulation on LIBERO, ReSteer improves steerability by 11% over 18k rollouts. In real-world experiments, we show that improved steerability is critical for interactive use, enabling users to instruct robots to perform any task at any time. We hope this work motivates further study on quantifying steerability and data collection strategies for large robot policies.
           </p>
         </div>
       </div>
     </div>
-    <!--/ Abstract. -->
 
-    <!-- Paper video. -->
     <div class="columns is-centered has-text-centered">
       <div class="column is-four-fifths">
-        <h2 class="title is-3">Video</h2>
-        <div class="publication-video">
-          <iframe src="https://www.youtube.com/embed/MrKrnHhk8IA?rel=0&amp;showinfo=0"
-                  frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+        <h2 class="title is-3">Introduction</h2>
+        <div class="content has-text-justified">
+          <p>
+            Language-conditioned multitask robot policies such as Vision-Language-Action (VLA) models [1-7] have emerged as a promising paradigm for robotic control, unifying language-specified goals and visual understanding. These policies use language instructions as an intuitive and flexible task representation, leveraging pretrained multimodal backbones [8] to encode grounded priors about the physical world. While these models have demonstrated immense capability, fitting dozens of tasks [3, 5], generalizing across new embodiments [1, 4], and unlocking different types of embodied reasoning [4, 9], a key failure mode remains: steerability.
+          </p>
+          <p>
+            Steerability captures a policy's ability to properly condition on new task instructions in arbitrary states. Consider the example in Fig. 1, where we initially instruct the robot to put the tea bag on the oven, then ask it to place it on the countertop. Existing policies [1, 2, 4] tend to ignore the new instruction and continue executing the original task, operating as if they were conditioned on state alone. This deficit is particularly problematic as it prevents users from issuing new instructions during ongoing execution, severely restricting when and where a robot can be meaningfully controlled.
+          </p>
+          <p>
+            In this work, we argue that a policy's steerability is a function of its training data distribution, with most existing datasets exhibiting pathologies that encourage learned models to ignore task conditioning. Concretely, existing datasets are collected subject to the following recipe: we identify a set of tasks, then collect demonstrations on each task independently. This process yields data where language is only informative for a small fraction of total task execution, leading to policies that over-index on state information to dictate behavior, a form of shortcut learning [10].
+          </p>
+          <p>
+            As an initial contribution, we formalize this intuition via conditional mutual information (CMI): given a dataset and learned policy, steerability can be approximated by I(A; L|S). In other words, incorporating language prompts reduces the variance of the predicted action distribution, indicating that instructions meaningfully constrain action selection. Empirically, we validate our proxy metric through experiments across multiple state-of-the-art VLAs, showing a strong correlation between our proposed metric and steerable success rate.
+          </p>
+          <p>
+            Motivated by this diagnosis, we argue that incorporating data where the task instruction changes mid-execution, eliciting corresponding behavioral switches, is critical for improving the steerability of the learned policy. To this end, we introduce ReSteer, a simple yet effective data generation framework that comprises two stages: stage-aware steering data generation and self-refinement.
+          </p>
+          <p>
+            In stage-aware steering data generation, for each switch from task A to task B, we (i) use CMI to identify low-steerability states along task A rollouts, (ii) pick a target state from task B, and (iii) synthesize a transition trajectory between the two for training. Since this first stage alone does not always guarantee reliable execution, we then apply a self-refining behavioral cloning stage: the policy is iteratively deployed to collect rollouts and finetuned solely on its own successful trajectories, reinforcing in-distribution steerability induced by the new steering data.
+          </p>
+          <p>
+            We evaluate ReSteer in both simulation and real-world experiments. On LIBERO [11], baseline policies exhibit limited steerability, especially at later switch points. ReSteer improves switched-task success by 10% absolute on benchmark task switching and improves steerability by 11% over 18k rollouts. In real-world kitchen experiments, ReSteer improves steerability by 2.2x over teleoperation-only finetuning and enables flexible long-horizon instruction chaining during execution.
+          </p>
+          <img src="./static/images_resteer/Teaser_0131.png" alt="Task switching example in a kitchen scene">
+          <p>
+            <b>Figure:</b> Daily manipulation is time-critical and often interruptible. ReSteer targets this setting by enabling policies to switch to revised user instructions from intermediate states.
+          </p>
         </div>
       </div>
     </div>
-    <!--/ Paper video. -->
   </div>
 </section>
 
-
-<section class="section">
-  <div class="container is-max-desktop">
-
-    <div class="columns is-centered">
-
-      <!-- Visual Effects. -->
-      <div class="column">
-        <div class="content">
-          <h2 class="title is-3">Visual Effects</h2>
-          <p>
-            Using <i>nerfies</i> you can create fun visual effects. This Dolly zoom effect
-            would be impossible without nerfies since it would require going through a wall.
-          </p>
-          <video id="dollyzoom" autoplay controls muted loop playsinline height="100%">
-            <source src="./static/videos/dollyzoom-stacked.mp4"
-                    type="video/mp4">
-          </video>
-        </div>
-      </div>
-      <!--/ Visual Effects. -->
-
-      <!-- Matting. -->
-      <div class="column">
-        <h2 class="title is-3">Matting</h2>
-        <div class="columns is-centered">
-          <div class="column content">
-            <p>
-              As a byproduct of our method, we can also solve the matting problem by ignoring
-              samples that fall outside of a bounding box during rendering.
+<section class="hero is-light is-small" id="results">
+  <div class="hero-body">
+    <div class="container">
+      <h2 class="title is-3 has-text-centered">Key Results</h2>
+      <div class="columns is-centered">
+        <div class="column is-5">
+          <div class="content">
+            <img src="./static/images_resteer/ReSteer_sim_result_0131.png" alt="Steerability score comparison">
+            <p class="has-text-justified">
+              <b>Figure:</b> ReSteer consistently improves steerability score across tasks versus baseline policies, showing stronger task switching under the same rollout conditions.
             </p>
-            <video id="matting-video" controls playsinline height="100%">
-              <source src="./static/videos/matting.mp4"
-                      type="video/mp4">
-            </video>
           </div>
-
+        </div>
+        <div class="column is-7">
+          <div class="content">
+            <img src="./static/images_resteer/simulation_result_v3.png" alt="Simulation heatmap results">
+            <p class="has-text-justified">
+              <b>Figure:</b> On LIBERO, ReSteer yields the largest average gain in switched-task success over baseline policy performance across switch timesteps.
+            </p>
+          </div>
         </div>
       </div>
     </div>
-    <!--/ Matting. -->
-
-    <!-- Animation. -->
-    <div class="columns is-centered">
-      <div class="column is-full-width">
-        <h2 class="title is-3">Animation</h2>
-
-        <!-- Interpolating. -->
-        <h3 class="title is-4">Interpolating states</h3>
-        <div class="content has-text-justified">
-          <p>
-            We can also animate the scene by interpolating the deformation latent codes of two input
-            frames. Use the slider here to linearly interpolate between the left frame and the right
-            frame.
-          </p>
-        </div>
-        <div class="columns is-vcentered interpolation-panel">
-          <div class="column is-3 has-text-centered">
-            <img src="./static/images/interpolate_start.jpg"
-                 class="interpolation-image"
-                 alt="Interpolate start reference image."/>
-            <p>Start Frame</p>
-          </div>
-          <div class="column interpolation-video-column">
-            <div id="interpolation-image-wrapper">
-              Loading...
-            </div>
-            <input class="slider is-fullwidth is-large is-info"
-                   id="interpolation-slider"
-                   step="1" min="0" max="100" value="0" type="range">
-          </div>
-          <div class="column is-3 has-text-centered">
-            <img src="./static/images/interpolate_end.jpg"
-                 class="interpolation-image"
-                 alt="Interpolation end reference image."/>
-            <p class="is-bold">End Frame</p>
-          </div>
-        </div>
-        <br/>
-        <!--/ Interpolating. -->
-
-        <!-- Re-rendering. -->
-        <h3 class="title is-4">Re-rendering the input video</h3>
-        <div class="content has-text-justified">
-          <p>
-            Using <span class="dnerf">Nerfies</span>, you can re-render a video from a novel
-            viewpoint such as a stabilized camera by playing back the training deformations.
-          </p>
-        </div>
-        <div class="content has-text-centered">
-          <video id="replay-video"
-                 controls
-                 muted
-                 preload
-                 playsinline
-                 width="75%">
-            <source src="./static/videos/replay.mp4"
-                    type="video/mp4">
-          </video>
-        </div>
-        <!--/ Re-rendering. -->
-
-      </div>
-    </div>
-    <!--/ Animation. -->
-
-
-    <!-- Concurrent Work. -->
-    <div class="columns is-centered">
-      <div class="column is-full-width">
-        <h2 class="title is-3">Related Links</h2>
-
-        <div class="content has-text-justified">
-          <p>
-            There's a lot of excellent work that was introduced around the same time as ours.
-          </p>
-          <p>
-            <a href="https://arxiv.org/abs/2104.09125">Progressive Encoding for Neural Optimization</a> introduces an idea similar to our windowed position encoding for coarse-to-fine optimization.
-          </p>
-          <p>
-            <a href="https://www.albertpumarola.com/research/D-NeRF/index.html">D-NeRF</a> and <a href="https://gvv.mpi-inf.mpg.de/projects/nonrigid_nerf/">NR-NeRF</a>
-            both use deformation fields to model non-rigid scenes.
-          </p>
-          <p>
-            Some works model videos with a NeRF by directly modulating the density, such as <a href="https://video-nerf.github.io/">Video-NeRF</a>, <a href="https://www.cs.cornell.edu/~zl548/NSFF/">NSFF</a>, and <a href="https://neural-3d-video.github.io/">DyNeRF</a>
-          </p>
-          <p>
-            There are probably many more by the time you are reading this. Check out <a href="https://dellaert.github.io/NeRF/">Frank Dellart's survey on recent NeRF papers</a>, and <a href="https://github.com/yenchenlin/awesome-NeRF">Yen-Chen Lin's curated list of NeRF papers</a>.
-          </p>
-        </div>
-      </div>
-    </div>
-    <!--/ Concurrent Work. -->
-
   </div>
 </section>
 
+<section class="section" id="hypothesis">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered">
+      <div class="column is-full-width">
+        <h2 class="title is-3">Key Hypothesis: Steering Data Generation</h2>
+        <div class="content has-text-justified">
+          <p>
+            ReSteer is built on the hypothesis that poor steerability is largely a data coverage problem: policies need explicit trajectory segments that represent mid-execution task switches. The data generation stage uses steerability signals to identify difficult states, then synthesizes transitions to target states under new task prompts.
+          </p>
+        </div>
+
+        <div class="columns is-centered">
+          <div class="column">
+            <img src="./static/images_resteer/ReSteer_Venn_0131.png" alt="Steering data generation intuition">
+            <p class="has-text-justified">
+              <b>Figure:</b> Steering trajectory synthesis expands overlap between task-conditioned trajectory distributions, improving reachable transitions during instruction switching.
+            </p>
+          </div>
+        </div>
+
+        <h3 class="title is-4">Evaluation Protocols</h3>
+        <div class="columns is-centered">
+          <div class="column is-three-quarters">
+            <img src="./static/images_resteer/steerability_evaluation_v3.png" alt="Steerability evaluation protocol">
+            <p class="has-text-justified">
+              <b>Figure:</b> Steerability is measured by injecting new prompts at different rollout timesteps and aggregating switched-task success into an average steerability score.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="method">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered">
+      <div class="column is-full-width">
+        <h2 class="title is-3">Method</h2>
+        <div class="content has-text-justified">
+          <p>
+            ReSteer contains three components: (1) a steerability estimator based on conditional mutual information to find low-steerability states, (2) stage-aware steering data generation to synthesize switch trajectories from those states, and (3) a self-refinement loop that re-trains on successful switched rollouts to reinforce in-distribution steerability.
+          </p>
+        </div>
+        <img src="./static/images_resteer/ReSteer_Method_v3.png" alt="ReSteer method overview">
+        <p class="has-text-justified">
+          <b>Figure:</b> Full ReSteer pipeline from steerability-aware state mining to synthetic steering data generation and iterative policy self-refinement.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
 
 <section class="section" id="BibTeX">
   <div class="container is-max-desktop content">
     <h2 class="title">BibTeX</h2>
-    <pre><code>@article{park2021nerfies,
-  author    = {Park, Keunhong and Sinha, Utkarsh and Barron, Jonathan T. and Bouaziz, Sofien and Goldman, Dan B and Seitz, Steven M. and Martin-Brualla, Ricardo},
-  title     = {Nerfies: Deformable Neural Radiance Fields},
-  journal   = {ICCV},
-  year      = {2021},
+    <pre><code>@inproceedings{resteer2026,
+  title     = {ReSteer: Quantifying and Refining the Steerability of Multitask Robot Policies},
+  author    = {Chen, Zhenyang and Tian, Alan and Wang, Liquan and Joffe, Benjamin and Lin, Yingyan Celine and Chen, Yuxiao and Karamcheti, Siddharth and Xu, Danfei},
+  booktitle = {Robotics: Science and Systems (RSS)},
+  year      = {2026}
 }</code></pre>
   </div>
 </section>
 
-
 <footer class="footer">
   <div class="container">
     <div class="content has-text-centered">
-      <a class="icon-link"
-         href="./static/videos/nerfies_paper.pdf">
+      <a class="icon-link" href="./static/papers/ReSteer_RSS2026.pdf">
         <i class="fas fa-file-pdf"></i>
-      </a>
-      <a class="icon-link" href="https://github.com/keunhong" class="external-link" disabled>
-        <i class="fab fa-github"></i>
       </a>
     </div>
     <div class="columns is-centered">
       <div class="column is-8">
         <div class="content">
           <p>
-            This website is licensed under a <a rel="license"
-                                                href="http://creativecommons.org/licenses/by-sa/4.0/">Creative
-            Commons Attribution-ShareAlike 4.0 International License</a>.
-          </p>
-          <p>
-            This means you are free to borrow the <a
-              href="https://github.com/nerfies/nerfies.github.io">source code</a> of this website,
-            we just ask that you link back to this page in the footer.
-            Please remember to remove the analytics code included in the header of the website which
-            you do not want on your website.
+            Website source format is adapted from the Nerfies project page template.
           </p>
         </div>
       </div>
