@@ -133,78 +133,49 @@
       </div>
     </div>
 
-    <div class="columns is-centered has-text-centered">
-      <div class="column is-four-fifths">
-        <h2 class="title is-3">Introduction</h2>
-        <div class="content has-text-justified">
-          <p>
-            Language-conditioned multitask robot policies such as Vision-Language-Action (VLA) models [1-7] have emerged as a promising paradigm for robotic control, unifying language-specified goals and visual understanding. These policies use language instructions as an intuitive and flexible task representation, leveraging pretrained multimodal backbones [8] to encode grounded priors about the physical world. While these models have demonstrated immense capability, fitting dozens of tasks [3, 5], generalizing across new embodiments [1, 4], and unlocking different types of embodied reasoning [4, 9], a key failure mode remains: steerability.
-          </p>
-          <p>
-            Steerability captures a policy's ability to properly condition on new task instructions in arbitrary states. Consider the example in Fig. 1, where we initially instruct the robot to put the tea bag on the oven, then ask it to place it on the countertop. Existing policies [1, 2, 4] tend to ignore the new instruction and continue executing the original task, operating as if they were conditioned on state alone. This deficit is particularly problematic as it prevents users from issuing new instructions during ongoing execution, severely restricting when and where a robot can be meaningfully controlled.
-          </p>
-          <p>
-            In this work, we argue that a policy's steerability is a function of its training data distribution, with most existing datasets exhibiting pathologies that encourage learned models to ignore task conditioning. Concretely, existing datasets are collected subject to the following recipe: we identify a set of tasks, then collect demonstrations on each task independently. This process yields data where language is only informative for a small fraction of total task execution, leading to policies that over-index on state information to dictate behavior, a form of shortcut learning [10].
-          </p>
-          <p>
-            As an initial contribution, we formalize this intuition via conditional mutual information (CMI): given a dataset and learned policy, steerability can be approximated by I(A; L|S). In other words, incorporating language prompts reduces the variance of the predicted action distribution, indicating that instructions meaningfully constrain action selection. Empirically, we validate our proxy metric through experiments across multiple state-of-the-art VLAs, showing a strong correlation between our proposed metric and steerable success rate.
-          </p>
-          <p>
-            Motivated by this diagnosis, we argue that incorporating data where the task instruction changes mid-execution, eliciting corresponding behavioral switches, is critical for improving the steerability of the learned policy. To this end, we introduce ReSteer, a simple yet effective data generation framework that comprises two stages: stage-aware steering data generation and self-refinement.
-          </p>
-          <p>
-            In stage-aware steering data generation, for each switch from task A to task B, we (i) use CMI to identify low-steerability states along task A rollouts, (ii) pick a target state from task B, and (iii) synthesize a transition trajectory between the two for training. Since this first stage alone does not always guarantee reliable execution, we then apply a self-refining behavioral cloning stage: the policy is iteratively deployed to collect rollouts and finetuned solely on its own successful trajectories, reinforcing in-distribution steerability induced by the new steering data.
-          </p>
-          <p>
-            We evaluate ReSteer in both simulation and real-world experiments. On LIBERO [11], baseline policies exhibit limited steerability, especially at later switch points. ReSteer improves switched-task success by 10% absolute on benchmark task switching and improves steerability by 11% over 18k rollouts. In real-world kitchen experiments, ReSteer improves steerability by 2.2x over teleoperation-only finetuning and enables flexible long-horizon instruction chaining during execution.
-          </p>
-          <img src="./static/images_resteer/Teaser_0131.png" alt="Task switching example in a kitchen scene">
-          <p>
-            <b>Figure:</b> Daily manipulation is time-critical and often interruptible. ReSteer targets this setting by enabling policies to switch to revised user instructions from intermediate states.
-          </p>
-        </div>
-      </div>
-    </div>
   </div>
 </section>
 
-<section class="hero is-light is-small" id="results">
-  <div class="hero-body">
-    <div class="container">
-      <h2 class="title is-3 has-text-centered">Key Results</h2>
-      <div class="columns is-centered">
-        <div class="column is-5">
-          <div class="content">
-            <img src="./static/images_resteer/ReSteer_sim_result_0131.png" alt="Steerability score comparison">
-            <p class="has-text-justified">
-              <b>Figure:</b> ReSteer consistently improves steerability score across tasks versus baseline policies, showing stronger task switching under the same rollout conditions.
-            </p>
-          </div>
-        </div>
-        <div class="column is-7">
-          <div class="content">
-            <img src="./static/images_resteer/simulation_result_v3.png" alt="Simulation heatmap results">
-            <p class="has-text-justified">
-              <b>Figure:</b> On LIBERO, ReSteer yields the largest average gain in switched-task success over baseline policy performance across switch timesteps.
-            </p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="section" id="hypothesis">
+<!-- Zhenyang TODO:: provide the eval protocol, figure, introduce MI and justify our perspectives. Add the eval and MI part -->
+<section class="section" id="Quantifying Steerability">
   <div class="container is-max-desktop">
     <div class="columns is-centered">
-      <div class="column is-full-width">
-        <h2 class="title is-3">Key Hypothesis: Steering Data Generation</h2>
+      <div class="column is-12">
+        <h2 class="title is-3 has-text-centered">Quantifying Steerability</h2>
+        <div style="text-align: center;">
+          <img src="./static/images_resteer/steerability_evaluation_v3.png" alt="Steerability evaluation protocol" style="display: inline-block;">
+        </div>
+        <p class="has-text-justified">
+          <b>Figure:</b> Steerability is measured by injecting new prompts at different rollout timesteps and aggregating switched-task success into an average steerability score.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="ReSteer-Framework">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered">
+      <div class="column is-12">
+        <h2 class="title is-3 has-text-centered">ReSteer: A Data-Centric Framework for Refining Steerability</h2>
         <div class="content has-text-justified">
+          <h3 class="subtitle is-4">Method</h3>
+          <ul>
+            <li><b>Steerability estimator:</b> Uses conditional mutual information to identify states where the policy is difficult to steer (low-steerability states).</li>
+            <li><b>Stage-aware steering data generation:</b> Synthesizes switch trajectories from the identified challenging states, providing explicit data for mid-execution task switches.</li>
+            <li><b>Self-refinement loop:</b> Continuously retrains the policy on successful switched rollouts to strengthen in-distribution steerability.</li>
+          </ul>
+        </div>
+        <img src="./static/images_resteer/ReSteer_Method_v3.png" alt="ReSteer method overview">
+        <p class="has-text-justified">
+          <b>Figure:</b> Full ReSteer pipeline from steerability-aware state mining to synthetic steering data generation and iterative policy self-refinement.
+        </p>
+        <div class="content has-text-justified">
+          <h3 class="subtitle is-4">Steerability Improvement from ReSteer</h3>
           <p>
             ReSteer is built on the hypothesis that poor steerability is largely a data coverage problem: policies need explicit trajectory segments that represent mid-execution task switches. The data generation stage uses steerability signals to identify difficult states, then synthesizes transitions to target states under new task prompts.
           </p>
         </div>
-
         <div class="columns is-centered">
           <div class="column">
             <img src="./static/images_resteer/ReSteer_Venn_0131.png" alt="Steering data generation intuition">
@@ -213,61 +184,125 @@
             </p>
           </div>
         </div>
+      </div>
 
-        <h3 class="title is-4">Evaluation Protocols</h3>
-        <div class="columns is-centered">
-          <div class="column is-three-quarters">
-            <img src="./static/images_resteer/steerability_evaluation_v3.png" alt="Steerability evaluation protocol">
+    </div>
+  </div>
+</section>
+
+<!-- # TODO: add other result plot and add the real-world experiment result. -->
+<section class="hero is-small" id="Experimental Results">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <h2 class="title is-3 has-text-centered">Experimental Results</h2>
+      <div class="columns is-centered">
+        <div class="column is-12">
+          <div class="content has-text-centered">
+            <img src="./static/images_resteer/simulation_result.svg" alt="Steerability score comparison" style="width: 100%; max-width: 100%; height: auto;">
             <p class="has-text-justified">
-              <b>Figure:</b> Steerability is measured by injecting new prompts at different rollout timesteps and aggregating switched-task success into an average steerability score.
+              <b>Figure:</b> ReSteer consistently improves steerability score across tasks versus baseline policies, showing stronger task switching under the same rollout conditions.
             </p>
           </div>
         </div>
       </div>
-    </div>
-  </div>
-</section>
-
-<section class="section" id="method">
-  <div class="container is-max-desktop">
-    <div class="columns is-centered">
-      <div class="column is-full-width">
-        <h2 class="title is-3">Method</h2>
-        <div class="content has-text-justified">
-          <p>
-            ReSteer contains three components: (1) a steerability estimator based on conditional mutual information to find low-steerability states, (2) stage-aware steering data generation to synthesize switch trajectories from those states, and (3) a self-refinement loop that re-trains on successful switched rollouts to reinforce in-distribution steerability.
-          </p>
+      <div class="columns is-centered">
+        <div class="column is-12">
+          <div class="content has-text-centered">
+            <img src="./static/images_resteer/simulation_result_v3.png" alt="Simulation heatmap results" style="width: 60%; max-width: 100%; height: auto;">
+            <p class="has-text-justified">
+              <b>Figure:</b> On LIBERO, ReSteer yields the largest average gain in switched-task success over baseline policy performance across switch timesteps.
+            </p>
+          </div>
         </div>
-        <img src="./static/images_resteer/ReSteer_Method_v3.png" alt="ReSteer method overview">
-        <p class="has-text-justified">
-          <b>Figure:</b> Full ReSteer pipeline from steerability-aware state mining to synthetic steering data generation and iterative policy self-refinement.
-        </p>
+      </div>
+
+      <h3 class="title is-4 has-text-centered" style="margin-top: 2rem;">
+        Success with <b style="color: #3273dc;">ReSteer</b>
+      </h3>
+      <div class="columns is-centered">
+        <div class="column">
+          <video autoplay controls muted loop playsinline style="width: 100%;">
+            <source src="./static/videos/resteer_success1.mp4" type="video/mp4">
+          </video>
+        </div>
+        <div class="column">
+          <video autoplay controls muted loop playsinline style="width: 100%;">
+            <source src="./static/videos/resteer_success2.mp4" type="video/mp4">
+          </video>
+        </div>
+        <div class="column">
+          <video autoplay controls muted loop playsinline style="width: 100%;">
+            <source src="./static/videos/resteer_succes3.mp4" type="video/mp4">
+          </video>
+        </div>
+        <div class="column">
+          <video autoplay controls muted loop playsinline style="width: 100%;">
+            <source src="./static/videos/resteer_success4.mp4" type="video/mp4">
+          </video>
+        </div>
+        <div class="column">
+          <video autoplay controls muted loop playsinline style="width: 100%;">
+            <source src="./static/videos/resteer_success5.mp4" type="video/mp4">
+          </video>
+        </div>
+      </div>
+
+      <h3 class="title is-4 has-text-centered" style="margin-top: 2rem;">
+        Baseline
+      </h3>
+      <div class="columns is-centered">
+        <div class="column">
+          <video autoplay controls muted loop playsinline style="width: 100%;">
+            <source src="./static/videos/baseline_fail1.mp4" type="video/mp4">
+          </video>
+        </div>
+        <div class="column">
+          <video autoplay controls muted loop playsinline style="width: 100%;">
+            <source src="./static/videos/baseline_fail2.mp4" type="video/mp4">
+          </video>
+        </div>
+        <div class="column">
+          <video autoplay controls muted loop playsinline style="width: 100%;">
+            <source src="./static/videos/baseline_fail3.mp4" type="video/mp4">
+          </video>
+        </div>
+        <div class="column">
+          <video autoplay controls muted loop playsinline style="width: 100%;">
+            <source src="./static/videos/baseline_fail4.mp4" type="video/mp4">
+          </video>
+        </div>
+        <div class="column">
+          <video autoplay controls muted loop playsinline style="width: 100%;">
+            <source src="./static/videos/baseline_fail5.mp4" type="video/mp4">
+          </video>
+        </div>
       </div>
     </div>
   </div>
 </section>
 
+
 <section class="section" id="BibTeX">
+  <!-- # TODO: add arxiv id and journal name -->
   <div class="container is-max-desktop content">
     <h2 class="title">BibTeX</h2>
-    <pre><code>@inproceedings{resteer2026,
+    <pre><code>@article{resteer2026,
   title     = {ReSteer: Quantifying and Refining the Steerability of Multitask Robot Policies},
   author    = {Chen, Zhenyang and Tian, Alan and Wang, Liquan and Joffe, Benjamin and Lin, Yingyan Celine and Chen, Yuxiao and Karamcheti, Siddharth and Xu, Danfei},
-  booktitle = {Robotics: Science and Systems (RSS)},
   year      = {2026}
 }</code></pre>
   </div>
 </section>
 
 <footer class="footer">
-  <div class="container">
+  <div class="container is-max-desktop">
     <div class="content has-text-centered">
       <a class="icon-link" href="./static/papers/ReSteer_RSS2026.pdf">
         <i class="fas fa-file-pdf"></i>
       </a>
     </div>
     <div class="columns is-centered">
-      <div class="column is-8">
+      <div class="column is-12">
         <div class="content">
           <p>
             Website source format is adapted from the Nerfies project page template.
