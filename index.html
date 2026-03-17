@@ -22,6 +22,18 @@
   <script src="./static/js/bulma-carousel.min.js"></script>
   <script src="./static/js/bulma-slider.min.js"></script>
   <script src="./static/js/index.js"></script>
+
+  <!-- MathJax for LaTeX-style math rendering -->
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['\\(','\\)'], ['$', '$']],
+        displayMath: [['\\[','\\]'], ['$$','$$']]
+      },
+      svg: { fontCache: 'global' }
+    };
+  </script>
+  <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </head>
 <body>
 
@@ -72,7 +84,7 @@
             <span class="author-block"><a href="https://faculty.cc.gatech.edu/~danfei" target="_blank" rel="noopener">Danfei Xu</a><sup>‡</sup></span>
           </div>
           <div class="is-size-6 publication-authors" style="margin-top: 0.25rem; color: #555;">
-            <sup>†</sup>Equal contribution &nbsp;&nbsp; <sup>‡</sup>Equal contribution
+            <sup>†</sup>Equal contribution &nbsp;&nbsp; <sup>‡</sup>Equal Advising
           </div>
 
           <div class="is-size-5 publication-authors">
@@ -137,18 +149,45 @@
 </section>
 
 <!-- Zhenyang TODO:: provide the eval protocol, figure, introduce MI and justify our perspectives. Add the eval and MI part -->
-<section class="section" id="Quantifying Steerability">
+<section class="section" id="Steerability for Multitask Policies">
   <div class="container is-max-desktop">
     <div class="columns is-centered">
       <div class="column is-12">
-        <h2 class="title is-3 has-text-centered">Quantifying Steerability</h2>
+        <h2 class="title is-3 has-text-centered">Steerability for Multitask Policies</h2>
+        <div class="content has-text-justified">
+          <h3 class="subtitle is-4">What is Steerability?</h3>
+          <p>
+            We say a multitask policy is <b>steerable</b> if it can flexibly change its behavior in response to new language instructions during execution: a policy should be interruptible and re-steerable by language at any execution state, without fixed task boundaries or hand-designed switching modes.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="columns is-centered">
+      <div class="column is-12">
+        <h3 class="subtitle is-4 has-text-weight-bold">Quantifying Steerability</h3>
         <div style="text-align: center;">
           <video id="eval-video" autoplay controls muted loop playsinline height="100%">
             <source src="./static/videos/eval_pipeline_animation.mp4" type="video/mp4">
           </video>
         </div>
         <p class="has-text-justified">
-          <b>Figure:</b> Steerability is measured by injecting new prompts at different rollout timesteps and aggregating switched-task success into an average steerability score.
+          We propose a protocal to measure steerability: injecting new prompts at different rollout timesteps and aggregating switched-task success into an average steerability score.
+        </p>
+      </div>
+    </div>
+
+    <div class="columns is-centered">
+      <div class="column is-12">
+        <h3 class="subtitle is-4 has-text-weight-bold">Conditional Mutual Information as a Proxy for Steerability</h3>
+        <p class="has-text-justified">
+          Direct rollout-based evaluation at every state is impractical, so we use <b>conditional mutual information</b> (CMI) between language and action at a fixed state \(s\) as an efficient offline proxy:
+          \[
+          I(A;L \mid S=s)=H(A \mid S=s)-H(A \mid S=s,L).
+          \]
+        </p>
+        <p class="has-text-justified">
+          We further prove CMI is a <b>necessary condition</b> for steerability. High CMI means that language modulates the action distribution at state \(s\) (high steerability), whereas low CMI reveals states where changing the instruction induces little behavioral change.
         </p>
       </div>
     </div>
@@ -161,17 +200,22 @@
       <div class="column is-12">
         <h2 class="title is-3 has-text-centered">ReSteer: A Data-Centric Framework for Refining Steerability</h2>
         <div class="content has-text-justified">
+          <p>
+            We hypothesize that poor steerability is a result from limited instruction-action supervision at the same states. ReSteer aims to identify such states efficiently and synthesize steering motion data to improve steerability.
+          </p>
+        </div>
+        <div class="content has-text-justified">
           <h3 class="subtitle is-4">Method</h3>
           <ul>
             <li><b>Steerability estimator:</b> Uses conditional mutual information to identify states where the policy is difficult to steer (low-steerability states).</li>
             <li><b>Stage-aware steering data generation:</b> Synthesizes switch trajectories from the identified challenging states, providing explicit data for mid-execution task switches.</li>
             <li><b>Self-refinement loop:</b> Continuously retrains the policy on successful switched rollouts to strengthen in-distribution steerability.</li>
           </ul>
+          <img src="./static/images_resteer/ReSteer_Method_v3.png" alt="ReSteer method overview">
+          <p class="has-text-justified">
+            <b>Figure:</b> Full ReSteer pipeline from steerability-aware state mining to synthetic steering data generation and iterative policy self-refinement.
+          </p>
         </div>
-        <img src="./static/images_resteer/ReSteer_Method_v3.png" alt="ReSteer method overview">
-        <p class="has-text-justified">
-          <b>Figure:</b> Full ReSteer pipeline from steerability-aware state mining to synthetic steering data generation and iterative policy self-refinement.
-        </p>
         <div class="content has-text-justified">
           <h3 class="subtitle is-4">Steerability Improvement from ReSteer</h3>
           <p>
