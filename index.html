@@ -54,9 +54,9 @@
       </a>
       <a class="navbar-item" href="#video">Video</a>
       <a class="navbar-item" href="#abstract">Abstract</a>
-      <a class="navbar-item" href="#results">Key Results</a>
-      <a class="navbar-item" href="#hypothesis">Hypothesis & Protocol</a>
-      <a class="navbar-item" href="#method">Method</a>
+      <a class="navbar-item" href="#hypothesis">Quantify Steerability</a>
+      <a class="navbar-item" href="#method">ReSteer</a>
+      <a class="navbar-item" href="#results">Results</a>
       <a class="navbar-item" href="#BibTeX">BibTeX</a>
     </div>
   </div>
@@ -149,15 +149,15 @@
 </section>
 
 <!-- Zhenyang TODO:: provide the eval protocol, figure, introduce MI and justify our perspectives. Add the eval and MI part -->
-<section class="section" id="Steerability for Multitask Policies">
+<section class="section" id="hypothesis">
   <div class="container is-max-desktop">
     <div class="columns is-centered">
       <div class="column is-12">
         <h2 class="title is-3 has-text-centered">Steerability for Multitask Policies</h2>
         <div class="content has-text-justified">
-          <h3 class="subtitle is-4">What is Steerability?</h3>
+          <!-- <h3 class="subtitle is-4">What is Steerability?</h3> -->
           <p>
-            We say a multitask policy is <b>steerable</b> if it can flexibly change its behavior in response to new language instructions during execution: a policy should be interruptible and re-steerable by language at any execution state, without fixed task boundaries or hand-designed switching modes.
+            A multitask policy should be <b>interruptible</b> and <b>steerable by language</b> at any execution state. This means it can flexibly change its behavior in response to new language instructions during execution.
           </p>
         </div>
       </div>
@@ -173,9 +173,30 @@
         </div>
         <p class="has-text-justified">
           We propose a protocal to measure steerability: injecting new prompts at different rollout timesteps and aggregating switched-task success into an average steerability score.
+          <br>
+          We evaluate steerability on leading open-source VLA models—π₀.₅, OpenVLA-OFT, and MolmoACT in LIBERO. As shown below, none of them reliably follow different instructions across states (a score of 1 means fully steerable across all states and tasks).
         </p>
       </div>
     </div>
+
+    <table class="table is-bordered is-striped is-hoverable is-fullwidth" style="margin: 2em auto; max-width: 600px;">
+      <thead>
+        <tr>
+          <th></th>
+          <th><b>OpenVLA-OFT</b></th>
+          <th><b>MolmoACT</b></th>
+          <th><b>&pi;<sub>0.5</sub></b></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><b>Steerability Score</b></td>
+          <td>0.252</td>
+          <td>0.295</td>
+          <td>0.403</td>
+        </tr>
+      </tbody>
+    </table>
 
     <div class="columns is-centered">
       <div class="column is-12">
@@ -187,14 +208,14 @@
           \]
         </p>
         <p class="has-text-justified">
-          We further prove CMI is a <b>necessary condition</b> for steerability. High CMI means that language modulates the action distribution at state \(s\) (high steerability), whereas low CMI reveals states where changing the instruction induces little behavioral change.
+          We show that CMI is a <b>necessary condition</b> for steerability. High CMI means that language modulates the action distribution at state \(s\) (high steerability), whereas low CMI reveals states where changing the instruction induces little behavioral change.
         </p>
       </div>
     </div>
   </div>
 </section>
 
-<section class="section" id="ReSteer-Framework">
+<section class="section" id="method">
   <div class="container is-max-desktop">
     <div class="columns is-centered">
       <div class="column is-12">
@@ -203,32 +224,34 @@
           <p>
             We hypothesize that poor steerability is a result from limited instruction-action supervision at the same states. ReSteer aims to identify such states efficiently and synthesize steering motion data to improve steerability.
           </p>
-        </div>
-        <div class="content has-text-justified">
-          <h3 class="subtitle is-4">Method</h3>
-          <ul>
-            <li><b>Steerability estimator:</b> Uses conditional mutual information to identify states where the policy is difficult to steer (low-steerability states).</li>
-            <li><b>Stage-aware steering data generation:</b> Synthesizes switch trajectories from the identified challenging states, providing explicit data for mid-execution task switches.</li>
-            <li><b>Self-refinement loop:</b> Continuously retrains the policy on successful switched rollouts to strengthen in-distribution steerability.</li>
-          </ul>
-          <img src="./static/images_resteer/ReSteer_Method_v3.png" alt="ReSteer method overview">
-          <p class="has-text-justified">
+          <img src="./static/images_resteer/method.svg" alt="ReSteer method overview">
+          <!-- <p class="has-text-justified">
             <b>Figure:</b> Full ReSteer pipeline from steerability-aware state mining to synthetic steering data generation and iterative policy self-refinement.
+          </p> -->
+        </div>
+        <div class="content has-text-justified">
+          <!-- <h3 class="subtitle is-4">Method</h3> -->
+          <p><b>SteerGen: Stage-Aware Steering Data Generation</b>
+            We generate cross-task steering data by decomposing demonstrations into semantic stages and connecting stage-consistent states across tasks, switch behaviors under new instructions.
+          <p><b>Mutual-Information-Based Steering Trajectory Sampling</b>
+            Instead of sampling uniformly, we prioritize data collection on states where the policy is least responsive to language, using conditional mutual information (CMI) as a proxy for steerability.
+          <p><b>Self-Refining Behavioral Cloning</b>
+            We iteratively improve the policy by collecting task-switching rollouts and training on successful trajectories, ensuring the policy fully utilizes the generated data and responds consistently to instruction changes.
           </p>
         </div>
         <div class="content has-text-justified">
-          <h3 class="subtitle is-4">Steerability Improvement from ReSteer</h3>
-          <p>
-            ReSteer is built on the hypothesis that poor steerability is largely a data coverage problem: policies need explicit trajectory segments that represent mid-execution task switches. The data generation stage uses steerability signals to identify difficult states, then synthesizes transitions to target states under new task prompts.
-          </p>
-        </div>
-        <div class="columns is-centered">
-          <div class="column">
-            <img src="./static/images_resteer/ReSteer_Venn_0131.png" alt="Steering data generation intuition">
-            <p class="has-text-justified">
-              <b>Figure:</b> Steering trajectory synthesis expands overlap between task-conditioned trajectory distributions, improving reachable transitions during instruction switching.
-            </p>
+          <h3 class="subtitle is-4">How ReSteer Improves Steerability?</h3>
+          <div class="columns is-centered">
+            <div class="column">
+              <img src="./static/images_resteer/venn.svg" alt="Steering data generation intuition">
+              <!-- <p class="has-text-justified">
+                <b>Figure:</b> Steering trajectory synthesis expands overlap between task-conditioned trajectory distributions, improving reachable transitions during instruction switching.
+              </p> -->
+            </div>
           </div>
+          <p>
+            ReSteer improves steerability by progressively expanding and refining the overlap between task state spaces. Initially, the steerable set $S^{\text{steer}}_{i\leftrightarrow j}$ occupies only a small region within the feasible states $S_i$ and $S_j$; stage-aware data generation $S^{gen}$ enlarges this region by introducing cross-task transitions. SRBC further expands $S^{\text{steer}}_{i\leftrightarrow j}$ through policy refinement.
+          </p>
         </div>
       </div>
 
@@ -237,33 +260,97 @@
 </section>
 
 <!-- # TODO: add other result plot and add the real-world experiment result. -->
-<section class="hero is-small" id="Experimental Results">
+<section class="hero is-small" id="results">
   <div class="hero-body">
     <div class="container is-max-desktop">
       <h2 class="title is-3 has-text-centered">Experimental Results</h2>
+      <div class="content has-text-centered" style="margin-bottom: 1.5rem;">
+        <div class="tabs is-centered is-toggle is-toggle-rounded resteer-video-tabs" role="tablist" aria-label="Experimental results videos">
+          <ul>
+            <li class="is-active" data-target="results-video-seq1" role="tab" aria-controls="results-video-seq1" aria-selected="true">
+              <a>ReSteer-Daily Task Sequence 1</a>
+            </li>
+            <li data-target="results-video-seq2" role="tab" aria-controls="results-video-seq2" aria-selected="false">
+              <a>ReSteer-Daily Task Sequence 2</a>
+            </li>
+          </ul>
+        </div>
+
+        <div id="results-video-seq1" class="resteer-tab-panel" role="tabpanel">
+          <div style="width: 100%; max-width: 960px; aspect-ratio: 1280 / 352; overflow: hidden; margin: 0 auto;">
+            <video autoplay controls muted loop playsinline style="width: 100%; height: 100%; object-fit: cover;">
+              <source src="./static/videos/ReSteer_4tasks_seq1.mp4" type="video/mp4">
+            </video>
+          </div>
+        </div>
+        <div id="results-video-seq2" class="resteer-tab-panel is-hidden" role="tabpanel">
+          <div style="width: 100%; max-width: 960px; aspect-ratio: 1280 / 352; overflow: hidden; margin: 0 auto;">
+            <video autoplay controls muted loop playsinline style="width: 100%; height: 100%; object-fit: cover;">
+              <source src="./static/videos/ReSteer_4tasks_seq2.mp4" type="video/mp4">
+            </video>
+          </div>
+        </div>
+      </div>
+      <h3 class="subtitle is-4 has-text-weight-bold">Hypotheses</h3>
+      <div class="content has-text-justified" style="margin-bottom: 2rem;">
+        <ul>
+          <li><b>H1:</b> Stage-aware data augmentation increases overlap between task state distributions, improving steerability across tasks.</li>
+          <li><b>H2:</b> CMI serves as an effective proxy for steerability, reducing the need for exhaustive rollout-based evaluation.</li>
+          <li><b>H3:</b> CMI-guided state sampling improves the sample efficiency of steering data generation.</li>
+          <li><b>H4:</b> SRBC improves the success rate of steerable behaviors, bridging the gap between induced steerability from dataset overlap and realized steerability at execution time.</li>
+        </ul>
+      </div>
+      <div class="columns is-centered">
+        <div class="column is-12">
+          <h3 class="subtitle is-4 has-text-weight-bold">ReSteer Improves Steerability</h3>
+        </div>
+      </div>
       <div class="columns is-centered">
         <div class="column is-12">
           <div class="content has-text-centered">
             <img src="./static/images_resteer/simulation_result.svg" alt="Steerability score comparison" style="width: 100%; max-width: 100%; height: auto;">
             <p class="has-text-justified">
-              <b>Figure:</b> ReSteer consistently improves steerability score across tasks versus baseline policies, showing stronger task switching under the same rollout conditions.
+              We evaluate ReSteer on LIBERO. For each source task, we measure success at switching to other tasks from intermediate states (bars). ReSteer achieves the highest steerability across all tasks, outperforming strong baselines like CAST.
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="columns is-centered">
+        <div class="column is-6">
+          <div class="content has-text-centered">
+            <img src="./static/images_resteer/sim_heatmap.svg" alt="Simulation heatmap results" style="width: 95%; max-width: 100%; height: auto;">
+            <p class="has-text-justified">
+              We compare the success rate improvement of switched-task at different timesteps. ReSteer shows a strong gain at later timestep switches. 
+            </p>
+          </div>
+        </div>
+        <div class="column is-6">
+          <div class="content has-text-centered">
+            <img src="./static/images_resteer/DROID_steerability_comparison.svg" alt="DROID steerability comparison" style="width: 100%; max-width: 100%; height: auto;">
+            <p class="has-text-justified">
+              ReSteer achieves 2.2x higher steerability while preserving single-task performance on real-world DROID evaluation across 4 single-task evaluations and 3 steering scenarios.
             </p>
           </div>
         </div>
       </div>
       <div class="columns is-centered">
         <div class="column is-12">
+          <h3 class="subtitle is-4 has-text-weight-bold">CMI-Guided State Sampling</h3>
+        </div>
+      </div>
+      <div class="columns is-centered">
+        <div class="column is-12">
           <div class="content has-text-centered">
-            <img src="./static/images_resteer/simulation_result_v3.png" alt="Simulation heatmap results" style="width: 60%; max-width: 100%; height: auto;">
-            <p class="has-text-justified">
-              <b>Figure:</b> On LIBERO, ReSteer yields the largest average gain in switched-task success over baseline policy performance across switch timesteps.
-            </p>
+            <img src="./static/images_resteer/CMI_result.svg" alt="CMI-guided state sampling results" style="width: 80%; max-width: 100%; height: auto;">
           </div>
+          <p class="has-text-justified">
+            To evaluate CMI as a proxy for steerability, we track CMI and steerability scores across training checkpoints. As shown in left figure, CMI is positively correlated with steerability, with particularly consistent trends within a single model family.
+          </p>
         </div>
       </div>
 
       <h3 class="title is-4 has-text-centered" style="margin-top: 2rem;">
-        Success with <b style="color: #3273dc;">ReSteer</b>
+        Simulation Rollouts with ReSteer
       </h3>
       <div class="columns is-centered">
         <div class="column">
@@ -326,6 +413,31 @@
     </div>
   </div>
 </section>
+
+<section class="section" id="limitations">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered">
+      <div class="column is-12">
+        <h2 class="title is-3 has-text-centered">Limitations and Future Work</h2>
+        <div class="content has-text-justified">
+          <p>
+            <b>Limitation:</b> Our evaluation and model analysis were conducted in a single test scene for language alignment, enabling controlled comparison but limiting coverage of real-world diversity and generalization.
+          </p>
+          <!-- <p>
+            <b>Impact of Data Distribution:</b> Steerability is highly sensitive to training data overlap: limited coverage of shared states/trajectories can hinder on-the-fly task switching from language, especially for under-represented initial states.
+          </p> -->
+          <p>
+            <b>Real-world Implications:</b> Collecting task-variant trajectories and evaluating steerability at scale is expensive, requiring substantial real-world data collection and annotation across diverse scenarios.
+          </p>
+          <p>
+            We hope this analysis motivates steerability-aware data collection and labeling that increases state diversity and overlap, enabling robust multitask policies that generalize.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 
 
 <section class="section" id="BibTeX">

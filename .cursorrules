@@ -1,0 +1,4 @@
+## Notes learned while editing
+
+- For website embedding, prefer `.mp4` (H.264 video + AAC audio) over `.mov`. Many browsers/GitHub Pages setups won’t reliably play `.mov` (or `video/quicktime`) inside `<video>`.
+

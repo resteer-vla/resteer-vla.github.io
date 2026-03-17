@@ -29,6 +29,30 @@ $(document).ready(function() {
 
     });
 
+    function setResultsVideoTab(targetId) {
+      var $tabs = $('.resteer-video-tabs li[role="tab"]');
+      var $panels = $('.resteer-tab-panel[role="tabpanel"]');
+
+      $tabs.removeClass('is-active').attr('aria-selected', 'false');
+      $tabs.filter('[data-target="' + targetId + '"]').addClass('is-active').attr('aria-selected', 'true');
+
+      $panels.addClass('is-hidden');
+      var $activePanel = $('#' + targetId);
+      $activePanel.removeClass('is-hidden');
+
+      $panels.not($activePanel).find('video').each(function() {
+        this.pause();
+      });
+      $activePanel.find('video').each(function() {
+        if (this.paused) this.play();
+      });
+    }
+
+    $(document).on('click', '.resteer-video-tabs li[role="tab"]', function() {
+      var targetId = $(this).data('target');
+      if (targetId) setResultsVideoTab(targetId);
+    });
+
     var options = {
 			slidesToScroll: 1,
 			slidesToShow: 3,
